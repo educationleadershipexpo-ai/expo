@@ -1,6 +1,7 @@
 
 
 
+
 :root {
     --gradient: linear-gradient(to right, #d12386, #711fb8);
     --primary-font: 'Poppins', sans-serif;
@@ -510,6 +511,28 @@ section {
 /* About Expo Section */
 #why-qatar, #market-opportunity {
     padding-top: 40px;
+}
+
+/* Hosted By Section */
+#hosted-by {
+    text-align: center;
+}
+.hosted-by-logo {
+    max-height: 70px;
+    margin: -1.5rem auto 1.5rem;
+    filter: invert(1);
+}
+.hosted-by-content p {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.1rem;
+}
+
+/* Partners Section */
+#home-partners {
+    padding-top: 40px;
+    padding-bottom: 40px;
 }
 
 /* Market Opportunity Section */
