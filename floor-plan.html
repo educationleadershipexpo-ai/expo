@@ -1,5 +1,7 @@
 
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,50 +77,52 @@
             </div>
         </section>
         
-        <section id="new-floor-plan" class="bg-surface">
+        <section id="floor-plan-section" class="bg-surface">
             <div class="container">
-                <div class="floor-plan-container">
+                <div id="floor-plan-container">
                     <!-- Left Column: Map -->
-                    <div class="floor-plan-map-area">
-                        <div class="zoom-controls">
-                            <button class="zoom-btn" id="zoom-in" aria-label="Zoom In"><i class="fas fa-plus"></i></button>
-                            <button class="zoom-btn" id="zoom-out" aria-label="Zoom Out"><i class="fas fa-minus"></i></button>
-                            <button class="zoom-btn" id="zoom-reset" aria-label="Reset Zoom"><i class="fas fa-expand"></i></button>
+                    <div class="floor-plan-main">
+                        <div id="floor-plan-tooltip"></div>
+                        <div id="floor-plan-map">
+                            <!-- Booths will be injected here by JS -->
                         </div>
-                        <div class="floor-plan-viewport">
-                            <div class="floor-plan-panzoom-container">
-                                <img src="https://i.imgur.com/k9v9g7E.png" alt="Exhibition Hall Floor Plan for QELE 2026">
-                                <div id="floor-plan-markers">
-                                    <!-- Markers will be injected by JS -->
-                                </div>
-                            </div>
-                        </div>
+                         <div class="vertical-text-left">SMALL SEATING ARRANGEMENTS</div>
+                         <div class="vertical-text-right">SMALL SEATING ARRANGEMENTS</div>
                     </div>
 
                     <!-- Right Column: Sidebar -->
-                    <div class="floor-plan-sidebar">
-                        <div class="sidebar-card">
-                            <h3>Booth Status</h3>
-                            <ul class="status-legend">
-                                <li><span class="legend-dot available"></span> Available <span class="status-count" id="count-available">0</span></li>
-                                <li><span class="legend-dot reserved"></span> Reserved <span class="status-count" id="count-reserved">0</span></li>
-                                <li><span class="legend-dot sold"></span> Sold <span class="status-count" id="count-sold">0</span></li>
-                            </ul>
+                    <aside class="floor-plan-sidebar">
+                        <h4>Booth Status</h4>
+                        <ul class="status-legend">
+                            <li>
+                                <span class="legend-label">
+                                    <span class="legend-dot available"></span> Available
+                                </span>
+                                <span class="legend-count" id="available-count">0</span>
+                            </li>
+                            <li>
+                                <span class="legend-label">
+                                    <span class="legend-dot reserved"></span> Reserved
+                                </span>
+                                <span class="legend-count" id="reserved-count">0</span>
+                            </li>
+                            <li>
+                                <span class="legend-label">
+                                    <span class="legend-dot sold"></span> Sold
+                                </span>
+                                <span class="legend-count" id="sold-count">0</span>
+                            </li>
+                        </ul>
+
+                        <h4>Filter by Package</h4>
+                        <div class="filter-pills">
+                            <button class="fp-filter-btn active" data-filter="all">All</button>
+                            <button class="fp-filter-btn" data-filter="basic">Basic</button>
+                            <button class="fp-filter-btn" data-filter="silver">Silver</button>
+                            <button class="fp-filter-btn" data-filter="gold">Gold</button>
+                            <button class="fp-filter-btn" data-filter="platinum">Platinum</button>
                         </div>
-                        <div class="sidebar-card">
-                            <h3>Filter by Package</h3>
-                            <div class="package-filters">
-                                <button class="filter-btn active" data-package="all">All</button>
-                                <button class="filter-btn" data-package="basic">Basic</button>
-                                <button class="filter-btn" data-package="silver">Silver</button>
-                                <button class="filter-btn" data-package="gold">Gold</button>
-                                <button class="filter-btn" data-package="platinum">Platinum</button>
-                            </div>
-                        </div>
-                         <div class="sidebar-cta">
-                             <a href="contact.html" class="btn btn-primary">Book Your Booth</a>
-                        </div>
-                    </div>
+                    </aside>
                 </div>
             </div>
         </section>
@@ -162,101 +166,26 @@
         </div>
     </footer>
     
-    <!-- Booth Details Modal -->
-    <div id="booth-details-modal" class="modal-overlay">
-        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="details-modal-title">
+    <!-- Exit Intent Modal -->
+    <div id="exit-intent-modal" class="modal-overlay">
+        <div class="modal-content exit-intent-content" role="dialog" aria-modal="true" aria-labelledby="exit-modal-title">
             <button class="modal-close-btn" aria-label="Close">&times;</button>
-            <h3 id="details-modal-title">Basic Booth</h3>
-            <p id="details-modal-booth-id" style="font-weight: bold; color: #555; margin-top: -0.5rem; margin-bottom: 0.5rem; display: none;"></p>
-            <p id="details-modal-size">3x3 (9 sqm)</p>
-            <div class="modal-divider"></div>
-            <h4>Key Benefits:</h4>
-            <ul id="details-modal-benefits" class="modal-benefits-list">
-                <li><i class="fas fa-check"></i> Standard-row booth</li>
-                <li><i class="fas fa-check"></i> Name on website list</li>
-                <li><i class="fas fa-check"></i> 2 exhibitor passes</li>
-                <li><i class="fas fa-check"></i> Access to networking lounge</li>
-            </ul>
-            <div class="modal-divider"></div>
-            <div class="modal-status-footer">
-                <span>Status:</span>
-                <span id="details-modal-status" class="status-tag available">Available</span>
-            </div>
-            <button id="enquire-from-details-btn" class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;">Enquire About This Booth</button>
+            <h3 id="exit-modal-title">Download The Deck Before You Leave!</h3>
+            <p>Get our official Exhibitor & Sponsorship Deck, including the floor plan and ROI details, sent straight to your inbox.</p>
+            <a href="contact.html" class="btn btn-primary">Get The Deck</a>
         </div>
     </div>
 
-    <!-- Booth Enquiry Modal (replaces old booking modal) -->
-    <div id="booth-booking-modal" class="modal-overlay">
-        <div class="modal-content enquiry-modal-content" role="dialog" aria-modal="true" aria-labelledby="enquiry-modal-title-text">
-            <button class="modal-close-btn" aria-label="Close">&times;</button>
-            <div id="booth-form-content">
-                <div class="enquiry-modal-header">
-                    <i class="fas fa-comments"></i>
-                    <h3 id="enquiry-modal-title-text">Let's Build Your Impact at QELE 2026</h3>
-                </div>
-                <form id="booth-booking-form" novalidate>
-                    <div class="form-group">
-                        <label for="form-booth-name">Name</label>
-                        <input type="text" id="form-booth-name" name="name" required>
-                        <div class="error-message"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="form-booth-company">Company</label>
-                        <input type="text" id="form-booth-company" name="company" required>
-                        <div class="error-message"></div>
-                    </div>
-                    <div class="form-group">
-                         <label for="form-booth-email">Email</label>
-                        <input type="email" id="form-booth-email" name="email" required>
-                        <div class="error-message"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="form-booth-phone">Phone</label>
-                        <input type="tel" id="form-booth-phone" name="phone">
-                        <div class="error-message"></div>
-                    </div>
-                     <div class="form-group">
-                        <label for="form-modal-interest">Interest</label>
-                         <select id="form-modal-interest" required>
-                            <option value="" disabled>Select Interest...</option>
-                            <option value="Basic Booth">Basic Booth</option>
-                            <option value="Silver Booth">Silver Booth</option>
-                            <option value="Gold Booth">Gold Booth</option>
-                            <option value="Platinum Booth">Platinum Booth</option>
-                        </select>
-                         <div class="error-message"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="form-booth-message">Message (Optional)</label>
-                        <textarea id="form-booth-message" name="requirements" rows="3"></textarea>
-                    </div>
-                    <div class="form-group form-group-consent">
-                        <input type="checkbox" id="form-booth-consent" required>
-                        <label for="form-booth-consent">I consent to having this website store my submitted information so they can respond to my inquiry.</label>
-                         <div class="error-message"></div>
-                    </div>
-                    <div class="modal-actions">
-                        <button type="submit" id="modal-submit-btn" class="btn btn-primary">Send Inquiry</button>
-                    </div>
-                </form>
-            </div>
-            <div id="booth-form-success" style="display: none; text-align: center;">
-                <i class="fas fa-check-circle" style="font-size: 3rem; color: #4db6ac; margin-bottom: 1rem;" aria-hidden="true"></i>
-                <h3>Thank You!</h3>
-                <p>Your inquiry for the <strong id="success-booth-package"></strong> has been received. Our team will contact you shortly.</p>
-                <button id="success-close-btn" class="btn btn-primary" style="margin-top: 1rem;">Close</button>
-            </div>
-        </div>
-    </div>
-    
     <!-- FOMO Popup -->
     <div id="fomo-popup" class="fomo-popup" role="status" aria-live="polite">
-        <i class="fas fa-check-circle"></i>
-        <div class="fomo-content">
-            <p id="fomo-message"></p>
-            <span id="fomo-timestamp"></span>
+        <div class="fomo-icon-wrapper">
+            <i class="fas fa-user"></i>
         </div>
+        <div class="fomo-content">
+            <h4 id="fomo-title"></h4>
+            <p id="fomo-details"></p>
+        </div>
+        <button id="fomo-close" class="fomo-close-btn" aria-label="Close notification">&times;</button>
     </div>
 
     <script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
