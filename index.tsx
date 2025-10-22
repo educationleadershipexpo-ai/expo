@@ -1,4 +1,6 @@
 
+
+
 import { GoogleGenAI, Chat, GenerateContentResponse } from "@google/genai";
 
 declare var Panzoom: any;
@@ -320,327 +322,131 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // --- Interactive Floor Plan Logic (New 2D Version) ---
+  const floorPlanContainer = document.getElementById('floor-plan-container');
+  if (floorPlanContainer) {
+    const map = document.getElementById('floor-plan-map');
+    const tooltip = document.getElementById('floor-plan-tooltip');
+    const filterButtons = document.querySelectorAll('.fp-filter-btn');
 
-  // --- New Interactive Floor Plan Logic ---
-  const floorPlanPage = document.getElementById('new-floor-plan');
-  if (floorPlanPage) {
-      const detailsModalEl = document.getElementById('booth-details-modal') as HTMLElement;
-      const enquiryModalEl = document.getElementById('booth-booking-modal') as HTMLElement;
-      const viewDetailsBtns = document.querySelectorAll('.view-details-btn');
-      
-      const detailsModalCloseBtn = detailsModalEl.querySelector('.modal-close-btn') as HTMLButtonElement;
-      const enquiryModalCloseBtn = enquiryModalEl.querySelector('.modal-close-btn') as HTMLButtonElement;
-      
-      const enquireFromDetailsBtn = document.getElementById('enquire-from-details-btn') as HTMLButtonElement;
-      const enquiryForm = document.getElementById('booth-booking-form') as HTMLFormElement;
-      const formContent = enquiryModalEl.querySelector('#booth-form-content') as HTMLElement;
-      const formSuccess = enquiryModalEl.querySelector('#booth-form-success') as HTMLElement;
-      const successCloseBtn = enquiryModalEl.querySelector('#success-close-btn') as HTMLButtonElement;
-
-      // Filter elements
-      const filterBtns = document.querySelectorAll('.filter-btn');
-      const packageCards = document.querySelectorAll('.package-info-card');
-      const markerContainer = document.getElementById('floor-plan-markers');
-
-      let lastFocusedElement: HTMLElement | null = null;
-      let currentPackage = '';
-
-      const packageData = {
-          basic: {
-              name: "Basic Booth",
-              size: "3x3 (9 sqm)",
-              benefits: ["Standard-row booth", "Name on website list", "2 exhibitor passes", "Access to networking lounge"],
-              status: "Available",
-          },
-          silver: {
-              name: "Silver Booth",
-              size: "4x3 (12 sqm)",
-              benefits: ["Priority row booth", "Logo on website", "3 exhibitor passes", "Lounge access"],
-              status: "On Hold",
-          },
-          gold: {
-              name: "Gold Booth",
-              size: "6x3 (18 sqm)",
-              benefits: ["High-traffic booth", "Catalog entry", "1 speaking slot", "4 passes"],
-              status: "Available",
-          },
-          platinum: {
-              name: "Platinum Booth",
-              size: "7x5 (35 sqm)",
-              benefits: ["Max visibility corner booth", "Premium furniture", "Homepage logo", "3 speaking slots", "8 passes", "VIP lounge access"],
-              status: "Booked",
-          }
-      };
-
-      const boothData = [
-          // Basic 3x3 booths
-          { id: 'B101', packageType: 'basic', status: 'available', coords: { top: '33%', left: '20%' } },
-          { id: 'B102', packageType: 'basic', status: 'booked', coords: { top: '33%', left: '25.5%' } },
-          { id: 'B103', packageType: 'basic', status: 'available', coords: { top: '33%', left: '31%' } },
-          { id: 'B104', packageType: 'basic', status: 'available', coords: { top: '38.5%', left: '20%' } },
-          { id: 'B105', packageType: 'basic', status: 'on-hold', coords: { top: '38.5%', left: '25.5%' } },
-          { id: 'B106', packageType: 'basic', status: 'available', coords: { top: '38.5%', left: '31%' } },
-          { id: 'B107', packageType: 'basic', status: 'available', coords: { top: '33%', left: '44%' } },
-          { id: 'B108', packageType: 'basic', status: 'available', coords: { top: '33%', left: '49.5%' } },
-          { id: 'B109', packageType: 'basic', status: 'booked', coords: { top: '33%', left: '55%' } },
-          
-          // Silver 4x3 booths
-          { id: 'S201', packageType: 'silver', status: 'on-hold', coords: { top: '61.5%', left: '22%' } },
-          { id: 'S202', packageType: 'silver', status: 'available', coords: { top: '61.5%', left: '31%' } },
-          { id: 'S203', packageType: 'silver', status: 'available', coords: { top: '61.5%', left: '46%' } },
-          { id: 'S204', packageType: 'silver', status: 'booked', coords: { top: '61.5%', left: '55%' } },
-          { id: 'S205', packageType: 'silver', status: 'available', coords: { top: '61.5%', left: '69.5%' } },
-          
-          // Gold 6x3 booths
-          { id: 'G301', packageType: 'gold', status: 'available', coords: { top: '75%', left: '35%' } },
-          { id: 'G302', packageType: 'gold', status: 'on-hold', coords: { top: '75%', left: '49.5%' } },
-          { id: 'G303', packageType: 'gold', status: 'available', coords: { top: '75%', left: '64%' } },
-          
-          // Platinum 7x5 booths
-          { id: 'P401', packageType: 'platinum', status: 'booked', coords: { top: '88%', left: '30%' } },
-          { id: 'P402', packageType: 'platinum', status: 'booked', coords: { top: '88%', left: '50%' } },
-          { id: 'P403', packageType: 'platinum', status: 'booked', coords: { top: '88%', left: '70%' } },
-      ];
-      
-      // --- Filtering Logic ---
-      const filterPackages = (filter: string) => {
-        // Update button active state
-        filterBtns.forEach(btn => {
-            btn.classList.toggle('active', btn.getAttribute('data-filter') === filter);
-        });
-
-        // Filter package list
-        packageCards.forEach(card => {
-            const cardStatus = card.getAttribute('data-status');
-            const show = filter === 'all' || filter === cardStatus;
-            card.classList.toggle('hidden', !show);
-        });
-
-        // Filter map markers
-        const markers = document.querySelectorAll('.floor-plan-marker');
-        markers.forEach(marker => {
-            const markerStatus = marker.getAttribute('data-status');
-            const show = filter === 'all' || filter === markerStatus;
-            marker.classList.toggle('marker-hidden', !show);
-        });
-      };
-
-      filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const filter = btn.getAttribute('data-filter');
-            if(filter) filterPackages(filter);
-        });
-      });
-      
-      // --- Marker Creation ---
-      if(markerContainer) {
-        boothData.forEach(booth => {
-            const pkgDetails = packageData[booth.packageType as keyof typeof packageData];
-            if (!pkgDetails) return;
+    const boothData = [
+        { id: 'B01', size: '3X3', package: 'basic', status: 'available' }, { id: 'B02', size: '3X3', package: 'basic', status: 'available' }, { id: 'B03', size: '3X3', package: 'basic', status: 'sold' }, { id: 'spacer1', size: '', package: '', status: 'spacer' }, { id: 'B04', size: '3X3', package: 'basic', status: 'available' }, { id: 'B05', size: '3X3', package: 'basic', status: 'sold' }, { id: 'B06', size: '3X3', package: 'basic', status: 'available' }, { id: 'spacer2', size: '', package: '', status: 'spacer' }, { id: 'S01', size: '3X3', package: 'silver', status: 'reserved' }, { id: 'S02', size: '3X3', package: 'silver', status: 'available' }, { id: 'S03', size: '3X3', package: 'silver', status: 'sold' }, { id: 'S04', size: '3X3', package: 'silver', status: 'available' },
+        { id: 'B07', size: '3X3', package: 'basic', status: 'available' }, { id: 'B08', size: '3X3', package: 'basic', status: 'reserved' }, { id: 'B09', size: '3X3', package: 'basic', status: 'available' }, { id: 'spacer3', size: '', package: '', status: 'spacer' }, { id: 'B10', size: '3X3', package: 'basic', status: 'available' }, { id: 'B11', size: '3X3', package: 'basic', status: 'available' }, { id: 'B12', size: '3X3', package: 'basic', status: 'available' }, { id: 'spacer4', size: '', package: '', status: 'spacer' }, { id: 'S05', size: '3X3', package: 'silver', status: 'available' }, { id: 'S06', size: '3X3', package: 'silver', status: 'available' }, { id: 'S07', size: '3X3', package: 'silver', status: 'sold' }, { id: 'S08', size: '3X3', package: 'silver', status: 'available' },
+        { id: 'B13', size: '3X3', package: 'basic', status: 'sold' }, { id: 'B14', size: '3X3', package: 'basic', status: 'available' }, { id: 'B15', size: '3X3', package: 'basic', status: 'available' }, { id: 'spacer5', size: '', package: '', status: 'spacer' }, { id: 'B16', size: '3X3', package: 'basic', status: 'sold' }, { id: 'B17', size: '3X3', package: 'basic', status: 'available' }, { id: 'B18', size: '3X3', package: 'basic', status: 'available' }, { id: 'spacer6', size: '', package: '', status: 'spacer' }, { id: 'S09', size: '3X3', package: 'silver', status: 'available' }, { id: 'S10', size: '3X3', package: 'silver', status: 'reserved' }, { id: 'S11', size: '3X3', package: 'silver', status: 'available' }, { id: 'S12', size: '3X3', package: 'silver', status: 'available' },
+        { id: 'B19', size: '3X3', package: 'basic', status: 'available' }, { id: 'B20', size: '3X3', package: 'basic', status: 'available' }, { id: 'B21', size: '3X3', package: 'basic', status: 'sold' }, { id: 'B22', size: '3X3', package: 'basic', status: 'available' }, { id: 'spacer7', size: '', package: '', status: 'spacer' }, { id: 'B23', size: '3X3', package: 'basic', status: 'available' }, { id: 'B24', size: '3X3', package: 'basic', status: 'reserved' }, { id: 'B25', size: '3X3', package: 'basic', status: 'available' }, { id: 'spacer8', size: '', package: '', status: 'spacer' }, { id: 'S13', size: '3X3', package: 'silver', status: 'sold' }, { id: 'S14', size: '3X3', package: 'silver', status: 'available' }, { id: 'S15', size: '3X3', package: 'silver', status: 'available' },
+        { id: 'midspacer1', size: '', package: '', status: 'mid-spacer' },
+        { id: 'S20', size: '4X3', package: 'silver', status: 'available' }, { id: 'S21', size: '4X3', package: 'silver', status: 'available' }, { id: 'spacer9', size: '', package: '', status: 'spacer' }, { id: 'G01', size: '4X3', package: 'gold', status: 'reserved' }, { id: 'G02', size: '4X3', package: 'gold', status: 'available' }, { id: 'G03', size: '4X3', package: 'gold', status: 'sold' }, { id: 'spacer10', size: '', package: '', status: 'spacer' }, { id: 'S22', size: '4X3', package: 'silver', status: 'available' }, { id: 'S23', size: '4X3', package: 'silver', status: 'available' }, { id: 'spacer11', size: '', package: '', status: 'spacer' }, { id: 'G04', size: '4X3', package: 'gold', status: 'reserved' },
+        { id: 'S24', size: '4X3', package: 'silver', status: 'sold' }, { id: 'S25', size: '4X3', package: 'silver', status: 'available' }, { id: 'spacer12', size: '', package: '', status: 'spacer' }, { id: 'G05', size: '4X3', package: 'gold', status: 'available' }, { id: 'G06', size: '4X3', package: 'gold', status: 'available' }, { id: 'G07', size: '4X3', package: 'gold', status: 'available' }, { id: 'spacer13', size: '', package: '', status: 'spacer' }, { id: 'S26', size: '4X3', package: 'silver', status: 'available' }, { id: 'S27', size: '4X3', package: 'silver', status: 'available' }, { id: 'spacer14', size: '', package: '', status: 'spacer' }, { id: 'G08', size: '4X3', package: 'gold', status: 'available' },
+        { id: 'midspacer2', size: '', package: '', status: 'mid-spacer' },
+        { id: 'bigspacer1', size: '', package: '', status: 'big-spacer' }, { id: 'G09', size: '6X3', package: 'gold', status: 'reserved' }, { id: 'bigspacer2', size: '', package: '', status: 'big-spacer' }, { id: 'G10', size: '6X3', package: 'gold', status: 'sold' }, { id: 'bigspacer3', size: '', package: '', status: 'big-spacer' },
+        { id: 'midspacer3', size: '', package: '', status: 'mid-spacer' },
+        { id: 'P01', size: '7X3', package: 'platinum', status: 'available' }, { id: 'bigspacer4', size: '', package: '', status: 'big-spacer' }, { id: 'P02', size: '7X3', package: 'platinum', status: 'available' }, { id: 'bigspacer5', size: '', package: '', status: 'big-spacer' }, { id: 'P03', size: '7X3', package: 'platinum', status: 'sold' },
+    ];
+    
+    // 1. Render Booths
+    if(map) {
+        boothData.forEach(data => {
+            if(data.status === 'spacer' || data.status === 'mid-spacer' || data.status === 'big-spacer') {
+                const spacer = document.createElement('div');
+                spacer.className = `booth-spacer ${data.status}`;
+                if (data.status === 'mid-spacer') spacer.style.gridColumn = 'span 12';
+                if (data.status === 'big-spacer') spacer.style.gridColumn = 'span 3';
+                if (data.id === 'bigspacer1' || data.id === 'bigspacer4') spacer.style.gridColumn = 'span 2';
+                map.appendChild(spacer);
+                return;
+            }
             
-            const marker = document.createElement('div');
-            marker.className = `floor-plan-marker marker-${booth.status}`;
-            marker.style.top = booth.coords.top;
-            marker.style.left = booth.coords.left;
-            marker.dataset.status = booth.status;
-            marker.dataset.packageName = booth.packageType;
-            marker.dataset.boothId = booth.id;
+            const booth = document.createElement('div');
+            booth.className = `booth ${data.status} ${data.package}`;
+            booth.dataset.id = data.id;
+            booth.dataset.package = data.package;
+            booth.dataset.status = data.status;
+            booth.textContent = data.size;
 
-            marker.textContent = pkgDetails.name.split(' ')[0]; // e.g., "Basic"
-            const statusText = booth.status.charAt(0).toUpperCase() + booth.status.slice(1);
-            marker.dataset.tooltip = `${statusText} (${pkgDetails.size})`;
+            if (data.size === '4X3') booth.style.gridColumn = 'span 2';
+            if (data.size === '6X3') booth.style.gridColumn = 'span 4';
+            if (data.size === '7X3') booth.style.gridColumn = 'span 5';
 
-            markerContainer.appendChild(marker);
+            map.appendChild(booth);
         });
-      }
+    }
 
-      // --- Panzoom Initialization ---
-      const panzoomElem = floorPlanPage.querySelector('.floor-plan-image-container');
-      if (panzoomElem) {
-        const panzoom = Panzoom(panzoomElem, {
-            maxScale: 3,
-            minScale: 0.7,
-            canvas: true,
-            contain: 'outside'
+    // 2. Update Status Counts
+    const updateStatusCounts = () => {
+      const counts = { available: 0, reserved: 0, sold: 0 };
+      boothData.forEach(booth => {
+          if (counts[booth.status as keyof typeof counts] !== undefined) {
+              counts[booth.status as keyof typeof counts]++;
+          }
+      });
+
+      document.getElementById('available-count')!.textContent = counts.available.toString();
+      document.getElementById('reserved-count')!.textContent = counts.reserved.toString();
+      document.getElementById('sold-count')!.textContent = counts.sold.toString();
+    };
+    
+    // 3. Handle Filtering
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const filter = button.getAttribute('data-filter');
+            
+            // Update button styles
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
+            // Filter booths
+            document.querySelectorAll('.booth').forEach(boothEl => {
+                const booth = boothEl as HTMLElement;
+                const packageType = booth.dataset.package;
+                if (filter === 'all' || packageType === filter) {
+                    booth.classList.remove('hidden');
+                } else {
+                    booth.classList.add('hidden');
+                }
+            });
         });
-        const parent = panzoomElem.parentElement;
-        parent?.addEventListener('wheel', panzoom.zoomWithWheel);
+    });
 
-        const zoomInBtn = floorPlanPage.querySelector('#zoom-in');
-        const zoomOutBtn = floorPlanPage.querySelector('#zoom-out');
-        const zoomResetBtn = floorPlanPage.querySelector('#zoom-reset');
+    // 4. Handle Tooltip
+    if (map && tooltip) {
+        map.addEventListener('mouseover', (e) => {
+            const target = e.target as HTMLElement;
+            if (target.classList.contains('booth')) {
+                const id = target.dataset.id;
+                const pkg = target.dataset.package;
+                const status = target.dataset.status;
+                
+                tooltip.innerHTML = `
+                    <strong>Booth ${id}</strong>
+                    <p>Package: <span>${pkg}</span></p>
+                    <p>Status: <span class="status-${status}">${status}</span></p>
+                `;
+                tooltip.style.display = 'block';
+            }
+        });
 
-        zoomInBtn?.addEventListener('click', () => panzoom.zoomIn());
-        zoomOutBtn?.addEventListener('click', () => panzoom.zoomOut());
-        zoomResetBtn?.addEventListener('click', () => panzoom.reset());
-      }
+        map.addEventListener('mousemove', (e) => {
+            if (tooltip.style.display === 'block') {
+                // Position tooltip relative to the container
+                const containerRect = floorPlanContainer.getBoundingClientRect();
+                const x = e.clientX - containerRect.left;
+                const y = e.clientY - containerRect.top;
+                
+                tooltip.style.left = `${x + 15}px`;
+                tooltip.style.top = `${y + 15}px`;
+            }
+        });
 
+        map.addEventListener('mouseout', (e) => {
+            const target = e.target as HTMLElement;
+            if (target.classList.contains('booth')) {
+                tooltip.style.display = 'none';
+            }
+        });
+    }
 
-      // --- Modal Logic ---
-      const trapFocus = (modal: HTMLElement, e: KeyboardEvent) => {
-          if (e.key !== 'Tab') return;
-          const focusableElements = Array.from(modal.querySelectorAll('button, [href], input, select, textarea')) as HTMLElement[];
-          const firstElement = focusableElements[0];
-          const lastElement = focusableElements[focusableElements.length - 1];
-
-          if (e.shiftKey) { // Shift + Tab
-              if (document.activeElement === firstElement) {
-                  lastElement.focus();
-                  e.preventDefault();
-              }
-          } else { // Tab
-              if (document.activeElement === lastElement) {
-                  firstElement.focus();
-                  e.preventDefault();
-              }
-          }
-      }
-
-      const openModal = (modal: HTMLElement) => {
-          lastFocusedElement = document.activeElement as HTMLElement;
-          modal.classList.add('visible');
-          modal.setAttribute('aria-hidden', 'false');
-
-          const handleKeyDown = (e: KeyboardEvent) => {
-              if (e.key === 'Escape') closeModal(modal);
-              trapFocus(modal, e);
-          };
-          modal.dataset.keydownListener = String(handleKeyDown);
-          document.addEventListener('keydown', handleKeyDown);
-          
-          setTimeout(() => {
-              (modal.querySelector('button, [href], input, select, textarea') as HTMLElement)?.focus();
-          }, 100);
-      };
-
-      const closeModal = (modal: HTMLElement) => {
-          modal.classList.remove('visible');
-          modal.setAttribute('aria-hidden', 'true');
-          const listener = modal.dataset.keydownListener;
-          if (listener) {
-            document.removeEventListener('keydown', eval(listener));
-            delete modal.dataset.keydownListener;
-          }
-          lastFocusedElement?.focus();
-      };
-
-      const openDetailsModal = (boothId: string | null, packageName: string) => {
-          const booth = boothId ? boothData.find(b => b.id === boothId) : null;
-          const data = packageData[packageName as keyof typeof packageData];
-          if (!data) return;
-          
-          currentPackage = packageName;
-
-          // Populate modal
-          (detailsModalEl.querySelector('#details-modal-title') as HTMLElement).textContent = data.name;
-          (detailsModalEl.querySelector('#details-modal-size') as HTMLElement).textContent = data.size;
-          
-          const boothIdEl = detailsModalEl.querySelector('#details-modal-booth-id') as HTMLElement;
-          if (booth) {
-              boothIdEl.textContent = `Booth ID: ${booth.id}`;
-              boothIdEl.style.display = 'block';
-          } else {
-              boothIdEl.style.display = 'none';
-          }
-
-          const benefitsList = detailsModalEl.querySelector('#details-modal-benefits') as HTMLElement;
-          benefitsList.innerHTML = data.benefits.map(b => `<li><i class="fas fa-check"></i> ${b}</li>`).join('');
-
-          const statusTag = detailsModalEl.querySelector('#details-modal-status') as HTMLElement;
-          const currentStatus = booth ? booth.status : data.status.toLowerCase().replace(' ', '-');
-          const statusText = currentStatus.charAt(0).toUpperCase() + currentStatus.slice(1);
-
-          statusTag.textContent = statusText;
-          statusTag.className = 'status-tag'; // Reset classes
-          statusTag.classList.add(currentStatus);
-          
-          if (currentStatus === 'booked') {
-              enquireFromDetailsBtn.disabled = true;
-              enquireFromDetailsBtn.textContent = 'Booked';
-              enquireFromDetailsBtn.classList.add('disabled');
-          } else {
-              enquireFromDetailsBtn.disabled = false;
-              enquireFromDetailsBtn.textContent = 'Enquire About This Booth';
-              enquireFromDetailsBtn.classList.remove('disabled');
-          }
-
-          openModal(detailsModalEl);
-      };
-      
-      viewDetailsBtns.forEach(btn => {
-          btn.addEventListener('click', () => {
-              const pkg = (btn as HTMLElement).dataset.package;
-              if (pkg) {
-                  openDetailsModal(null, pkg);
-              }
-          });
-      });
-
-      if (markerContainer) {
-          markerContainer.addEventListener('click', (e) => {
-              const marker = (e.target as HTMLElement).closest('.floor-plan-marker');
-              if (marker) {
-                  const boothId = (marker as HTMLElement).dataset.boothId;
-                  const pkgName = (marker as HTMLElement).dataset.packageName;
-                  if (boothId && pkgName) {
-                      openDetailsModal(boothId, pkgName);
-                  }
-              }
-          });
-      }
-
-      enquireFromDetailsBtn.addEventListener('click', () => {
-          if(enquireFromDetailsBtn.disabled) return;
-          closeModal(detailsModalEl);
-          
-          formContent.style.display = 'block';
-          formSuccess.style.display = 'none';
-          enquiryForm.reset();
-          enquiryInputs.forEach(input => clearError(input));
-
-          const data = packageData[currentPackage as keyof typeof packageData];
-          const interestSelect = enquiryModalEl.querySelector('#form-modal-interest') as HTMLSelectElement;
-          if (interestSelect) {
-              interestSelect.value = data.name;
-          }
-
-          openModal(enquiryModalEl);
-      });
-      
-      const nameInput = document.getElementById('form-booth-name') as HTMLInputElement;
-      const emailInput = document.getElementById('form-booth-email') as HTMLInputElement;
-      const companyInput = document.getElementById('form-booth-company') as HTMLInputElement;
-      const interestSelect = document.getElementById('form-modal-interest') as HTMLSelectElement;
-      const consentCheckbox = document.getElementById('form-booth-consent') as HTMLInputElement;
-
-      const enquiryInputs: HTMLElement[] = [nameInput, emailInput, companyInput, interestSelect, consentCheckbox];
-
-      enquiryInputs.forEach(input => {
-        if (!input) return;
-        const eventType = input.tagName.toLowerCase() === 'select' || input.getAttribute('type') === 'checkbox' ? 'change' : 'input';
-        input.addEventListener(eventType, () => validateField(input));
-      });
-
-      enquiryForm.addEventListener('submit', (e) => {
-          e.preventDefault();
-          const isFormValid = enquiryInputs.map(input => validateField(input)).every(Boolean);
-
-          if (isFormValid) {
-              (formSuccess.querySelector('#success-booth-package') as HTMLElement).textContent = interestSelect.value;
-              formContent.style.display = 'none';
-              formSuccess.style.display = 'block';
-              successCloseBtn.focus();
-          }
-      });
-      
-      detailsModalEl.addEventListener('click', (e) => e.target === detailsModalEl && closeModal(detailsModalEl));
-      detailsModalCloseBtn.addEventListener('click', () => closeModal(detailsModalEl));
-
-      enquiryModalEl.addEventListener('click', (e) => e.target === enquiryModalEl && closeModal(enquiryModalEl));
-      enquiryModalCloseBtn.addEventListener('click', () => closeModal(enquiryModalEl));
-      successCloseBtn.addEventListener('click', () => closeModal(enquiryModalEl));
-      
-      filterPackages('all');
+    // Initial setup
+    updateStatusCounts();
   }
 
 
@@ -661,7 +467,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let chat: Chat;
     let hasWelcomed = false;
 
-    const systemInstruction = `You are Socrates the Owl, the wise and friendly mascot and official AI Assistant for the QATAR EDUCATION LEADERSHIP EXPO 2026 (QELE 2026). Your goal is to answer questions from potential exhibitors, sponsors, and attendees. Be friendly, professional, and concise, incorporating a wise and helpful owl persona.
+    const systemInstruction = `You are the official AI Assistant for the QATAR EDUCATION LEADERSHIP EXPO 2026 (QELE 2026). Your goal is to answer questions from potential exhibitors, sponsors, and attendees. Be friendly, professional, and concise.
 
     Here is key information about the event:
     - Event Name: QATAR EDUCATION LEADERSHIP EXPO 2026 (QELE 2026)
@@ -803,7 +609,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         if (!hasWelcomed) {
-            addMessage("Hoot hoot! I'm Socrates, the QELE AI Assistant. How can I help you learn about the expo today?", 'ai');
+            addMessage("Hello! I'm the QELE AI Assistant. How can I help you learn about the expo today?", 'ai');
             createSuggestionChips();
             hasWelcomed = true;
         }
@@ -875,7 +681,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 let message = '';
                 if (entry.target.id === 'booth-packages') {
                     message = 'Questions about packages?';
-                } else if (entry.target.id === 'new-floor-plan') {
+                } else if (entry.target.id === 'floor-plan-container') {
                     message = 'Need help choosing a booth?';
                 }
                 
@@ -887,7 +693,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.6 });
 
     const sponsorshipSection = document.getElementById('booth-packages');
-    const boothsSection = document.getElementById('new-floor-plan');
+    const boothsSection = document.getElementById('floor-plan-container');
     if (sponsorshipSection) observer.observe(sponsorshipSection);
     if (boothsSection) observer.observe(boothsSection);
   }
