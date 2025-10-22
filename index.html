@@ -1,0 +1,554 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QATAR EDUCATION LEADERSHIP EXPO 2026</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.24.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+
+    <header class="main-header" id="main-header">
+        <div class="container">
+            <a href="index.html" class="logo">QELE 2026</a>
+            <button class="nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+            </button>
+            <nav id="main-nav">
+                 <ul>
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About Expo</a></li>
+                    <li class="has-dropdown">
+                        <a href="#" class="nav-link">For Students <i class="fas fa-angle-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="career-counselling.html">Career Counselling</a></li>
+                            <li><a href="universities.html">Participating Universities</a></li>
+                            <li><a href="workshops.html">Workshop Schedule</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="why-exhibit.html" class="nav-link">For Exhibitors <i class="fas fa-angle-down"></i></a>
+                         <ul class="dropdown-menu">
+                            <li><a href="why-exhibit.html">Why Exhibit</a></li>
+                            <li><a href="booth-features.html">Booth Features</a></li>
+                            <li><a href="floor-plan.html">Floor Plan</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="sponsorship-tiers.html" class="nav-link">For Sponsors <i class="fas fa-angle-down"></i></a>
+                         <ul class="dropdown-menu">
+                            <li><a href="sponsorship-tiers.html">Sponsorship Tiers</a></li>
+                            <li><a href="brand-exposure.html">Brand Exposure</a></li>
+                            <li><a href="past-partners.html">Past Partners</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-ctas">
+                <a href="floor-plan.html" class="btn btn-primary btn-sm">Book a Booth</a>
+                <a href="contact.html" class="btn btn-primary btn-sm">Sponsor Now</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1. HERO SECTION -->
+        <section id="hero">
+            <video autoplay loop muted playsinline id="hero-video" aria-hidden="true">
+                <source src="https://videos.pexels.com/video-files/3209828/3209828-hd_1920_1080_25fps.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="container hero-content">
+                <div class="hero-text">
+                    <h1>Join the Region's Most Impactful Education Expo</h1>
+                    <p>
+                        <strong>April 14–15, 2026 | Sheraton Grand Doha Resort & Convention Hotel</strong>
+                        <br>
+                        Organized by Student Diwan, Qatar's leading EdTech platform
+                    </p>
+                    <div class="cta-group">
+                        <a href="floor-plan.html" id="hero-cta-booth" class="btn btn-primary">Reserve My Booth</a>
+                        <a href="contact.html" id="hero-cta-sponsor" class="btn btn-outline-light">Become a Sponsor</a>
+                    </div>
+                    <div class="urgency-trigger">
+                        <p><strong>15% Early Bird Discount Ends Nov 20, 2025</strong></p>
+                    </div>
+                     <div id="countdown-timer">
+                        <div class="timer-unit">
+                            <span id="days">00</span>
+                            <p>Days</p>
+                        </div>
+                        <div class="timer-unit">
+                            <span id="hours">00</span>
+                            <p>Hours</p>
+                        </div>
+                        <div class="timer-unit">
+                            <span id="minutes">00</span>
+                            <p>Minutes</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-mascot">
+                    <img src="https://eduexpoqatar.com/owl-countdown.png" alt="Socrates the Owl, QELE 2026 Mascot">
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. WHO IS ATTENDING -->
+        <section id="who-is-attending">
+            <div class="container">
+                 <h2>Who Is Attending?</h2>
+                 <div class="attendee-grid">
+                    <div class="attendee-card"><i class="fas fa-university"></i> 100+ Universities & Colleges</div>
+                    <div class="attendee-card"><i class="fas fa-laptop-code"></i> 50+ Edutech Companies</div>
+                    <div class="attendee-card"><i class="fas fa-chalkboard-teacher"></i> 75+ Education Consultants</div>
+                    <div class="attendee-card"><i class="fas fa-user-tie"></i> K-12 Leaders & Students</div>
+                    <div class="attendee-card"><i class="fas fa-building-columns"></i> Government Representatives</div>
+                    <div class="attendee-card"><i class="fas fa-microphone-alt"></i> 120+ Speakers & Influencers</div>
+                    <div class="attendee-card"><i class="fas fa-hands-holding-circle"></i> Sponsors, Media & Investors</div>
+                    <div class="attendee-card"><i class="fas fa-graduation-cap"></i> 4000+ Students</div>
+                 </div>
+            </div>
+        </section>
+
+        <!-- EXHIBITOR BENEFITS SECTION (NEW) -->
+        <section id="exhibitor-benefits" class="bg-surface section-angled-top">
+            <div class="container">
+                 <h2>Exhibitor Benefits</h2>
+                 <p class="subtitle">Maximize your impact and achieve your goals at QELE 2026.</p>
+                 <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <i class="fas fa-users"></i>
+                        <h3>Recruitment</h3>
+                        <p>Engage Grade 11–12 students with strong admission intent (D+I).</p>
+                    </div>
+                     <div class="benefit-card">
+                        <i class="fas fa-eye"></i>
+                        <h3>Visibility</h3>
+                        <p>Gain 1M+ brand impressions across digital & event platforms.</p>
+                    </div>
+                     <div class="benefit-card">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>Thought Leadership</h3>
+                        <p>Shape MENA’s education agenda through panels & roundtables.</p>
+                    </div>
+                     <div class="benefit-card">
+                        <i class="fas fa-handshake"></i>
+                        <h3>Partnerships</h3>
+                        <p>Connect with education leaders, government, & industry experts.</p>
+                    </div>
+                 </div>
+            </div>
+        </section>
+
+        <!-- WHO SHOULD EXHIBIT SECTION (NEW) -->
+        <section id="who-should-exhibit" class="bg-surface">
+            <div class="container">
+                <h2>Who Should Exhibit?</h2>
+                <p class="subtitle">If you provide solutions for the education ecosystem, QELE is your platform.</p>
+                <div class="exhibitor-types-grid">
+                    <div class="exhibitor-type-card">
+                        <i class="fas fa-university"></i>
+                        <p>Universities & Colleges</p>
+                    </div>
+                    <div class="exhibitor-type-card">
+                        <i class="fas fa-wifi"></i>
+                        <p>Online Learning Providers</p>
+                    </div>
+                    <div class="exhibitor-type-card">
+                        <i class="fas fa-microchip"></i>
+                        <p>Hardware Providers</p>
+                    </div>
+                    <div class="exhibitor-type-card">
+                        <img src="https://eduexpoqatar.com/owl-vr.png" alt="Socrates the owl wearing VR goggles" class="exhibitor-card-icon-img">
+                        <p>EdTech (AI, VR, Digital)</p>
+                    </div>
+                    <div class="exhibitor-type-card">
+                        <i class="fas fa-flask"></i>
+                        <p>STEM Education Tools</p>
+                    </div>
+                    <div class="exhibitor-type-card">
+                        <i class="fas fa-headset"></i>
+                        <p>Education Consultants</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEVER MISS A LEAD SECTION (NEW) -->
+        <section id="lead-capture">
+            <div class="container">
+                <div class="lead-capture-grid">
+                    <div class="lead-capture-text">
+                        <h2>Never Miss a Lead</h2>
+                        <h3>Instant Capture for Every Exhibitor</h3>
+                        <p>Turn every handshake into a qualified lead in seconds with our integrated lead capture system.</p>
+                        <ul class="lead-capture-features">
+                            <li><i class="fas fa-check-circle"></i> <strong>Scan qualified visitors</strong> in seconds.</li>
+                            <li><i class="fas fa-check-circle"></i> Instantly capture Name, Role, Institution, Contact (Opt-in).</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Real-time sync</strong> to your exhibitor dashboard.</li>
+                            <li><i class="fas fa-check-circle"></i> Instant <strong>CSV export</strong> for quick CRM import.</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Works offline</strong>, auto-syncs when back online.</li>
+                        </ul>
+                        <a href="contact.html" class="btn btn-primary">Capture Every Lead. Convert Faster.</a>
+                    </div>
+                    <div class="lead-capture-image">
+                        <img src="https://images.ctfassets.net/s3023prw228s/2Q2p5hLITP1yV0a4rCtnB9/b63d7e5d1794b61f3640b6e9a068019e/lead-capture-qr.png" alt="Phone scanning a QR code for lead capture">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- KEYNOTE SPEAKERS SECTION -->
+        <section id="keynote-speakers">
+            <div class="container">
+                <h2>Meet Our Keynote Speakers</h2>
+                <p class="subtitle">Insights from the vanguards of education, technology, and policy.</p>
+                <div class="speakers-grid">
+                    <!-- Speaker 1 -->
+                    <div class="speaker-card">
+                        <a href="#" class="speaker-linkedin" aria-label="Dr. Sarah Al-Mansouri's LinkedIn profile" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <img src="https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Headshot of Dr. Sarah Al-Mansouri" class="speaker-photo">
+                        <h4>Dr. Sarah Al-Mansouri</h4>
+                        <p class="speaker-title">Director of Education Innovation</p>
+                        <p class="speaker-org">Qatar Foundation</p>
+                        <span class="speaker-tag">Digital Learning & EdTech</span>
+                    </div>
+                    <!-- Speaker 2 -->
+                    <div class="speaker-card">
+                        <a href="#" class="speaker-linkedin" aria-label="Prof. Ahmed Hassan's LinkedIn profile" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <img src="https://images.pexels.com/photos/1181599/pexels-photo-1181599.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Headshot of Prof. Ahmed Hassan" class="speaker-photo">
+                        <h4>Prof. Ahmed Hassan</h4>
+                        <p class="speaker-title">Dean of Engineering</p>
+                        <p class="speaker-org">Qatar University</p>
+                        <span class="speaker-tag">STEM Education</span>
+                    </div>
+                    <!-- Speaker 3 -->
+                    <div class="speaker-card">
+                        <a href="#" class="speaker-linkedin" aria-label="Ms. Fatima Al-Thani's LinkedIn profile" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <img src="https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Headshot of Ms. Fatima Al-Thani" class="speaker-photo">
+                        <h4>Ms. Fatima Al-Thani</h4>
+                        <p class="speaker-title">CEO</p>
+                        <p class="speaker-org">Education Excellence Institute</p>
+                        <span class="speaker-tag">Leadership in Education</span>
+                    </div>
+                    <!-- Speaker 4 -->
+                    <div class="speaker-card">
+                        <a href="#" class="speaker-linkedin" aria-label="Dr. Michael Chen's LinkedIn profile" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <img src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Headshot of Dr. Michael Chen" class="speaker-photo">
+                        <h4>Dr. Michael Chen</h4>
+                        <p class="speaker-title">Research Director</p>
+                        <p class="speaker-org">Cambridge Assessment</p>
+                        <span class="speaker-tag">Assessment & Analytics</span>
+                    </div>
+                    <!-- Speaker 5 -->
+                    <div class="speaker-card">
+                        <a href="#" class="speaker-linkedin" aria-label="Dr. Layla Abdulrahman's LinkedIn profile" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <img src="https://images.pexels.com/photos/1181424/pexels-photo-1181424.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Headshot of Dr. Layla Abdulrahman" class="speaker-photo">
+                        <h4>Dr. Layla Abdulrahman</h4>
+                        <p class="speaker-title">Head of Curriculum</p>
+                        <p class="speaker-org">Ministry of Education</p>
+                        <span class="speaker-tag">Curriculum Development</span>
+                    </div>
+                    <!-- Speaker 6 -->
+                    <div class="speaker-card">
+                        <a href="#" class="speaker-linkedin" aria-label="Mr. James Wilson's LinkedIn profile" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <img src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Headshot of Mr. James Wilson" class="speaker-photo">
+                        <h4>Mr. James Wilson</h4>
+                        <p class="speaker-title">Global Education Consultant</p>
+                        <p class="speaker-org">UNESCO</p>
+                        <span class="speaker-tag">International Education</span>
+                    </div>
+                    <!-- Speaker 7 -->
+                    <div class="speaker-card">
+                        <a href="#" class="speaker-linkedin" aria-label="Dr. Noor Al-Kuwari's LinkedIn profile" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <img src="https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Headshot of Dr. Noor Al-Kuwari" class="speaker-photo">
+                        <h4>Dr. Noor Al-Kuwari</h4>
+                        <p class="speaker-title">Vice Principal</p>
+                        <p class="speaker-org">Doha International School</p>
+                        <span class="speaker-tag">Student Development</span>
+                    </div>
+                    <!-- Speaker 8 -->
+                    <div class="speaker-card">
+                        <a href="#" class="speaker-linkedin" aria-label="Prof. Robert Martinez's LinkedIn profile" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <img src="https://images.pexels.com/photos/1516680/pexels-photo-1516680.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Headshot of Prof. Robert Martinez" class="speaker-photo">
+                        <h4>Prof. Robert Martinez</h4>
+                        <p class="speaker-title">Education Technology Pioneer</p>
+                        <p class="speaker-org">EdTech Global</p>
+                        <span class="speaker-tag">AI in Education</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 7. TESTIMONIALS -->
+        <section id="testimonials" class="bg-surface">
+            <div class="container">
+                <h2>Trusted by Global Education Leaders</h2>
+                <p class="subtitle">Don't just take our word for it. Here's what past exhibitors have to say.</p>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <i class="fas fa-quote-left"></i>
+                        <blockquote>The quality of student interactions and B2B networking was exceptional. We exceeded our recruitment targets for the MENA region in just two days. A must-attend event.</blockquote>
+                        <div class="testimonial-author">
+                            <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Photo of Dr. Anya Sharma.">
+                            <div>
+                                <strong>Dr. Anya Sharma</strong>
+                                <span>Director of International Admissions, Cambridge University</span>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="testimonial-card">
+                        <i class="fas fa-quote-left"></i>
+                        <blockquote>QELE provided the perfect platform to launch our new EdTech solution. The access to school principals and government officials was unparalleled. The ROI was immediate.</blockquote>
+                        <div class="testimonial-author">
+                            <img src="https://i.pravatar.cc/150?u=a042581f4e29026704f" alt="Photo of Fatima Al-Khater.">
+                            <div>
+                                <strong>Fatima Al-Khater</strong>
+                                <span>CEO, EduVerse Technologies</span>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="testimonial-card">
+                        <i class="fas fa-quote-left"></i>
+                        <blockquote>As a Platinum Sponsor, the brand visibility was phenomenal. The team ensured our logo and message were front and center, connecting us with key decision-makers effortlessly.</blockquote>
+                        <div class="testimonial-author">
+                            <img src="https://i.pravatar.cc/150?u=a042581f4e29026704e" alt="Photo of Johnathan Chen.">
+                            <div>
+                                <strong>Johnathan Chen</strong>
+                                <span>MENA Partnerships Lead, Global Learning Inc.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. THREE WAYS TO JOIN -->
+        <section id="three-ways-to-join">
+            <div class="container">
+                <h2>Your 3 Ways to Join</h2>
+                <div class="ways-to-join-grid">
+                    <div class="way-card">
+                        <img src="https://images.pexels.com/photos/842876/pexels-photo-842876.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Exhibition booth">
+                        <h3>Exhibit</h3>
+                        <p>Showcase Your Institution – Claim Your Booth</p>
+                    </div>
+                    <div class="way-card">
+                        <img src="https://images.pexels.com/photos/3184431/pexels-photo-3184431.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Person speaking at a conference">
+                        <h3>Speak</h3>
+                        <p>Inspire the Region – Host a Workshop or Talk</p>
+                    </div>
+                    <div class="way-card">
+                        <img src="https://images.pexels.com/photos/2608517/pexels-photo-2608517.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Sponsored event stage">
+                        <h3>Sponsor</h3>
+                        <p>Lead the Change – Maximize MENA Visibility</p>
+                    </div>
+                </div>
+                 <div class="section-cta">
+                    <a href="contact.html" class="btn btn-primary">Get in Touch</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="index.html" class="logo">QELE 2026</a>
+                    <p>The premier event connecting educational leaders, institutions, and innovators in the MENA region.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="sitemap-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Expo</a></li>
+                        <li><a href="why-exhibit.html">For Exhibitors</a></li>
+                        <li><a href="sponsorship-tiers.html">For Sponsors</a></li>
+                        <li><a href="universities.html">For Students</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Connect With Us</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Sheraton Grand Doha, Qatar</p>
+                    <p><i class="fas fa-envelope"></i> partnerships@eduexpoqatar.com</p>
+                    <p><i class="fas fa-phone"></i> +974 7444 9111</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 QELE. All Rights Reserved.</p>
+                <div class="social-links">
+                    <a href="https://twitter.com/qatarexpo2026" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://linkedin.com/company/qatarexpo2026" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://instagram.com/qatarexpo2026" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sticky CTA -->
+    <div id="sticky-cta">
+        <a href="contact.html" class="btn btn-primary">📥 Get Sponsorship Deck</a>
+    </div>
+
+    <!-- AI Chatbot -->
+    <div id="chatbot-fab-container">
+      <div id="chatbot-bubble" class="chatbot-bubble" style="display: none;"></div>
+      <div id="chatbot-fab" role="button" aria-label="Open AI Chat">
+          <i class="fas fa-comments"></i>
+      </div>
+    </div>
+    <div id="chatbot-window" class="chatbot-window" role="dialog" aria-modal="true" aria-labelledby="chatbot-header-title">
+        <div class="chatbot-header">
+            <h3 id="chatbot-header-title">QELE AI Assistant, Socrates</h3>
+            <button id="chatbot-close-btn" aria-label="Close Chat">&times;</button>
+        </div>
+        <div id="chatbot-messages" class="chatbot-messages" role="log" aria-live="polite">
+            <!-- Messages will be injected here -->
+        </div>
+        <div id="chatbot-suggestions" class="chatbot-suggestions">
+            <!-- Suggestion chips will be injected here -->
+        </div>
+        <form id="chatbot-form" class="chatbot-form">
+            <div class="chatbot-input-wrapper">
+                <input type="text" id="chatbot-input" placeholder="Ask a question..." autocomplete="off" aria-label="Your message">
+                <button type="submit" aria-label="Send Message"><i class="fas fa-paper-plane"></i></button>
+            </div>
+            <div class="form-group-consent-chatbot">
+                <input type="checkbox" id="chatbot-consent" name="chatbot-consent" required>
+                <label for="chatbot-consent">I consent to the processing of my data.</label>
+                <div class="error-message"></div>
+            </div>
+        </form>
+    </div>
+
+    <!-- FOMO Popup -->
+    <div id="fomo-popup" class="fomo-popup" role="status" aria-live="polite">
+        <i class="fas fa-check-circle"></i>
+        <div class="fomo-content">
+            <p id="fomo-message"></p>
+            <span id="fomo-timestamp"></span>
+        </div>
+    </div>
+
+    <!-- Booth Details Modal -->
+    <div id="booth-details-modal" class="modal-overlay">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="details-modal-title">
+            <button class="modal-close-btn" aria-label="Close">&times;</button>
+            <h3 id="details-modal-title">Basic Booth</h3>
+            <p id="details-modal-booth-id" style="font-weight: bold; color: #555; margin-top: -0.5rem; margin-bottom: 0.5rem; display: none;"></p>
+            <p id="details-modal-size">3x3 (9 sqm)</p>
+            <div class="modal-divider"></div>
+            <h4>Key Benefits:</h4>
+            <ul id="details-modal-benefits" class="modal-benefits-list">
+                <li><i class="fas fa-check"></i> Standard-row booth</li>
+                <li><i class="fas fa-check"></i> Name on website list</li>
+                <li><i class="fas fa-check"></i> 2 exhibitor passes</li>
+                <li><i class="fas fa-check"></i> Access to networking lounge</li>
+            </ul>
+            <div class="modal-divider"></div>
+            <div class="modal-status-footer">
+                <span>Status:</span>
+                <span id="details-modal-status" class="status-tag available">Available</span>
+            </div>
+            <button id="enquire-from-details-btn" class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;">Enquire About This Booth</button>
+        </div>
+    </div>
+
+    <!-- Booth Enquiry Modal -->
+    <div id="booth-booking-modal" class="modal-overlay">
+        <div class="modal-content enquiry-modal-content" role="dialog" aria-modal="true" aria-labelledby="enquiry-modal-title-text">
+            <button class="modal-close-btn" aria-label="Close">&times;</button>
+            <div id="booth-form-content">
+                <div class="enquiry-modal-header">
+                    <i class="fas fa-comments"></i>
+                    <h3 id="enquiry-modal-title-text">Let's Build Your Impact at QELE 2026</h3>
+                </div>
+                <form id="booth-booking-form" novalidate>
+                    <div class="form-group">
+                        <label for="form-booth-name">Name</label>
+                        <input type="text" id="form-booth-name" name="name" required>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="form-booth-company">Company</label>
+                        <input type="text" id="form-booth-company" name="company" required>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                         <label for="form-booth-email">Email</label>
+                        <input type="email" id="form-booth-email" name="email" required>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="form-booth-phone">Phone</label>
+                        <input type="tel" id="form-booth-phone" name="phone">
+                        <div class="error-message"></div>
+                    </div>
+                     <div class="form-group">
+                        <label for="form-modal-interest">Interest</label>
+                         <select id="form-modal-interest" required>
+                            <option value="" disabled>Select Interest...</option>
+                            <option value="Basic Booth">Basic Booth</option>
+                            <option value="Silver Booth">Silver Booth</option>
+                            <option value="Gold Booth">Gold Booth</option>
+                            <option value="Platinum Booth">Platinum Booth</option>
+                        </select>
+                         <div class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="form-booth-message">Message (Optional)</label>
+                        <textarea id="form-booth-message" name="requirements" rows="3"></textarea>
+                    </div>
+                    <div class="form-group form-group-consent">
+                        <input type="checkbox" id="form-booth-consent" required>
+                        <label for="form-booth-consent">I consent to having this website store my submitted information so they can respond to my inquiry.</label>
+                         <div class="error-message"></div>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="submit" id="modal-submit-btn" class="btn btn-primary">Send Inquiry</button>
+                    </div>
+                </form>
+            </div>
+            <div id="booth-form-success" style="display: none; text-align: center;">
+                <i class="fas fa-check-circle" style="font-size: 3rem; color: #4db6ac; margin-bottom: 1rem;" aria-hidden="true"></i>
+                <h3>Thank You!</h3>
+                <p>Your inquiry for the <strong id="success-booth-package"></strong> has been received. Our team will contact you shortly.</p>
+                <button id="success-close-btn" class="btn btn-primary" style="margin-top: 1rem;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Sticky Bar -->
+    <div id="mobile-sticky-bar">
+        <a href="universities.html" class="mobile-cta-btn"><i class="fas fa-graduation-cap"></i><span>Student</span></a>
+        <a href="floor-plan.html" class="mobile-cta-btn"><i class="fas fa-chalkboard-user"></i><span>Exhibitor</span></a>
+        <a href="sponsorship-tiers.html" class="mobile-cta-btn"><i class="fas fa-star"></i><span>Sponsor</span></a>
+    </div>
+    
+    <script src="https://unpkg.com/@panzoom/panzoom@4.5.1/dist/panzoom.min.js"></script>
+    <script type="module" src="index.tsx"></script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
