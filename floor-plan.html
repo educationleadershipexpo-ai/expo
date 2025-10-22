@@ -77,94 +77,46 @@
         
         <section id="new-floor-plan" class="bg-surface">
             <div class="container">
-                <div class="new-floor-plan-grid">
+                <div class="floor-plan-container">
                     <!-- Left Column: Map -->
-                    <div class="floor-plan-map-wrapper">
+                    <div class="floor-plan-map-area">
                         <div class="zoom-controls">
                             <button class="zoom-btn" id="zoom-in" aria-label="Zoom In"><i class="fas fa-plus"></i></button>
                             <button class="zoom-btn" id="zoom-out" aria-label="Zoom Out"><i class="fas fa-minus"></i></button>
                             <button class="zoom-btn" id="zoom-reset" aria-label="Reset Zoom"><i class="fas fa-expand"></i></button>
                         </div>
-                        <div class="floor-plan-3d-wrapper">
-                             <div class="floor-plan-image-container">
-                                 <img src="https://i.imgur.com/k9v9g7E.png" alt="Floor plan for Dafna Hall at QELE 2026, showing booth layouts and sizes.">
-                                 <div class="floor-plan-markers" id="floor-plan-markers">
-                                    <!-- Markers will be injected here by JS -->
-                                 </div>
-                             </div>
-                        </div>
-                        <div class="floor-plan-legend-v2">
-                            <div class="legend-item-v2"><span class="dot available"></span> Available</div>
-                            <div class="legend-item-v2"><span class="dot on-hold"></span> On Hold</div>
-                            <div class="legend-item-v2"><span class="dot booked"></span> Booked</div>
+                        <div class="floor-plan-viewport">
+                            <div class="floor-plan-panzoom-container">
+                                <img src="https://i.imgur.com/k9v9g7E.png" alt="Exhibition Hall Floor Plan for QELE 2026">
+                                <div id="floor-plan-markers">
+                                    <!-- Markers will be injected by JS -->
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Right Column: Packages -->
-                    <div class="packages-list-container">
-                        <div class="filter-controls">
-                            <button class="filter-btn active" data-filter="all">All</button>
-                            <button class="filter-btn" data-filter="available">Available</button>
-                            <button class="filter-btn" data-filter="on-hold">On Hold</button>
-                            <button class="filter-btn" data-filter="booked">Booked</button>
+                    <!-- Right Column: Sidebar -->
+                    <div class="floor-plan-sidebar">
+                        <div class="sidebar-card">
+                            <h3>Booth Status</h3>
+                            <ul class="status-legend">
+                                <li><span class="legend-dot available"></span> Available <span class="status-count" id="count-available">0</span></li>
+                                <li><span class="legend-dot reserved"></span> Reserved <span class="status-count" id="count-reserved">0</span></li>
+                                <li><span class="legend-dot sold"></span> Sold <span class="status-count" id="count-sold">0</span></li>
+                            </ul>
                         </div>
-                        <div class="packages-list-wrapper">
-                            <!-- Basic Booth -->
-                            <div class="package-info-card" data-status="available" data-package-name="basic">
-                                <div class="package-header">
-                                    <span class="status-dot available"></span>
-                                    <div>
-                                        <h4>Basic Booth</h4>
-                                        <p>3x3 (9 sqm)</p>
-                                    </div>
-                                </div>
-                                <div class="package-controls">
-                                    <span class="status-tag available">Available</span>
-                                    <button class="btn btn-primary btn-sm view-details-btn" data-package="basic">View Details</button>
-                                </div>
+                        <div class="sidebar-card">
+                            <h3>Filter by Package</h3>
+                            <div class="package-filters">
+                                <button class="filter-btn active" data-package="all">All</button>
+                                <button class="filter-btn" data-package="basic">Basic</button>
+                                <button class="filter-btn" data-package="silver">Silver</button>
+                                <button class="filter-btn" data-package="gold">Gold</button>
+                                <button class="filter-btn" data-package="platinum">Platinum</button>
                             </div>
-                            <!-- Silver Booth -->
-                            <div class="package-info-card" data-status="on-hold" data-package-name="silver">
-                                <div class="package-header">
-                                    <span class="status-dot on-hold"></span>
-                                    <div>
-                                        <h4>Silver Booth</h4>
-                                        <p>4x3 (12 sqm)</p>
-                                    </div>
-                                </div>
-                                <div class="package-controls">
-                                    <span class="status-tag on-hold">On Hold</span>
-                                    <button class="btn btn-primary btn-sm view-details-btn" data-package="silver">View Details</button>
-                                </div>
-                            </div>
-                            <!-- Gold Booth -->
-                            <div class="package-info-card" data-status="available" data-package-name="gold">
-                                <div class="package-header">
-                                    <span class="status-dot available"></span>
-                                    <div>
-                                        <h4>Gold Booth</h4>
-                                        <p>6x3 (18 sqm)</p>
-                                    </div>
-                                </div>
-                                <div class="package-controls">
-                                    <span class="status-tag available">Available</span>
-                                    <button class="btn btn-primary btn-sm view-details-btn" data-package="gold">View Details</button>
-                                </div>
-                            </div>
-                            <!-- Platinum Booth -->
-                            <div class="package-info-card" data-status="booked" data-package-name="platinum">
-                                <div class="package-header">
-                                    <span class="status-dot booked"></span>
-                                    <div>
-                                        <h4>Platinum Booth</h4>
-                                        <p>7x5 (35 sqm)</p>
-                                    </div>
-                                </div>
-                                <div class="package-controls">
-                                    <span class="status-tag booked">Booked</span>
-                                    <button class="btn btn-sm view-details-btn disabled" data-package="platinum" disabled>View Details</button>
-                                </div>
-                            </div>
+                        </div>
+                         <div class="sidebar-cta">
+                             <a href="contact.html" class="btn btn-primary">Book Your Booth</a>
                         </div>
                     </div>
                 </div>
